@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { margin: 0; background: #000; color: #00ff41; font-family: 'Courier New', monospace; overflow-x: hidden; }
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+        .container { display: flex; gap: 20px; padding: 20px; }
+        .window { border: 2px solid #00ff41; padding: 20px; width: 50%; background: rgba(0,0,0,0.8); }
+        .avatar { width: 120px; border-radius: 50%; border: 3px solid #00ff41; margin-bottom: 10px; }
+        button { background: #00ff41; color: #000; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="container">
+    <!-- Window 1: Profile -->
+    <div class="window">
+        <h2>>> SYSTEM_USER</h2>
+        <img src="my-pic.jpg" class="avatar">
+        <p>NAME: SAJU ISLAM</p>
+        <p>AGE: 17 YEARS</p>
+        <p>STATUS: ROOT_ADMIN_ACTIVE</p>
+        <button onclick="activateVoice()">INITIATE ROBOT VOICE</button>
+    </div>
+
+    <!-- Window 2: Tools & Music -->
+    <div class="window">
+        <h2>>> CONTROL_PANEL</h2>
+        <p>> MULTI_DOWNLOADER_READY</p>
+        <input type="text" placeholder="Paste link..." style="width:100%; background:#000; color:#00ff41; border:1px solid #00ff41;">
+        <button>EXECUTE_FETCH</button>
+        <hr>
+        <button onclick="document.getElementById('music').play()">PLAY SAD VIBES (ARJIT)</button>
+        <audio id="music" src="song.mp3"></audio>
+    </div>
+</div>
+
+<script>
+    // ম্যাট্রিক্স কোড ইফেক্ট
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const drops = Array(Math.floor(canvas.width / 20)).fill(1);
+    function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff41';
+        drops.forEach((y, i) => {
+            ctx.fillText(Math.floor(Math.random() * 2), i * 20, y * 20);
+            if (y * 20 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(draw, 33);
+
+    // ভয়েস ফাংশন
+    function activateVoice() {
+        const msg = new SpeechSynthesisUtterance("Welcome Saju Islam. System Root Access granted.");
+        msg.pitch = 0.5;
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+</body>
+</html>
